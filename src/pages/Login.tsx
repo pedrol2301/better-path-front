@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// import Logo from "../../public/logo.svg";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -25,12 +26,17 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <section className="hero is-fullheight is-light">
+    <section className="hero is-fullheight ">
       <div className="hero-body">
         <div className="container">
           <div className="columns is-centered">
             <div className="column is-5">
-              <div className="box">
+              <div className="mb-3">
+                <h1 className="title is-2 has-text-centered">
+                  <img className="" src="/logo.png" alt="Logo" width="250" height="150" />
+                </h1>
+              </div>
+              <div className="box column is-10 m-auto">
                 <h1 className="title is-4 has-text-centered">Login</h1>
                 <form onSubmit={handleSubmit}>
                   <div className="field">
@@ -46,7 +52,7 @@ const LoginPage: React.FC = () => {
                       />
                     </div>
                   </div>
-                  <div className="field">
+                  <div className="field mb-3">
                     <label className="label">Password</label>
                     <div className="control">
                       <input
@@ -59,11 +65,14 @@ const LoginPage: React.FC = () => {
                       />
                     </div>
                   </div>
-                  <div className="field">
-                    <div className="control">
-                      <button className="button is-primary is-fullwidth">
+                  <div className="field my-2">
+                    <div className="control columns my-3">
+                      <button className="button is-warning column is-two-fifths m-auto">
                         Login
                       </button>
+                      <a href="/register" className="button is-warning is-outlined column is-two-fifths  m-auto">
+                        Register
+                      </a>
                     </div>
                   </div>
                 </form>

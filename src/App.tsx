@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import LoginPage from './components/LoginPage';
+import Router from './routes/routes';
 
 function App() {
-  return <LoginPage />
+  return <Router />
   
 }
 
