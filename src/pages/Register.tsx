@@ -1,34 +1,69 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 
 export default function Register() {
   
+    const api = process.env.REACT_APP_API_URL;
+
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
+    
+
+    const navigate = useNavigate();
   
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-  
-      const response = await fetch("/login", {
+      setLoading(true);
+      const response = await fetch(`${api}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ 
+          name,
+          email,
+          password
+        }),
       });
   
       const data = await response.text();
       if (response.ok) {
-        setMessage(`✅ ${data}`);
+        setMessage(``);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setLoading(false);
+        toast.success("Account created successfully", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        let datajson = JSON.parse(data);
+        localStorage.setItem("jwt", datajson.jwt);
+
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
       } else {
-        setMessage(`❌ ${data}`);
+        setMessage(``);
+        setLoading(false);
+        toast.error(data, {
+          position: "top-right",
+          autoClose: 2000,
+        });
       }
     };
   
     return (
       <section className="hero is-fullheight ">
+        <ToastContainer/>
         <div className="hero-body">
           <div className="container">
             <div className="columns is-centered">
@@ -88,15 +123,30 @@ export default function Register() {
                           type="password"
                           placeholder="Confirm your password"
                           value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          onChange={(e) => {
+                            setConfirmPassword(e.target.value);
+                            if (password !== e.target.value) {
+                              setMessage("❌ Passwords do not match");
+                            } else {
+                              setMessage("");
+                            }
+                          }}
                           required
                         />
                       </div>
                     </div>
                     <div className="field my-2">
                       <div className="control columns my-3">
-                        <button className="button is-warning column m-auto is-two-thirds">
-                          Create Account
+                        <button className="button is-warning column m-auto is-two-thirds"  >
+                          {
+                            loading ? (
+                              <span className="icon is-small">
+                                <i className="fas fa-spinner fa-spin"></i>
+                              </span>
+                            ) : (
+                              <span>Register</span>
+                            )
+                          }
                         </button>
                       </div>
                     </div>

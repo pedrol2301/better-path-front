@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 // import Logo from "../../public/logo.svg";
 
 const LoginPage: React.FC = () => {
@@ -6,10 +7,12 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
+  const api = process.env.REACT_APP_API_URL;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch("/login", {
+    const response = await fetch(`${api}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,13 +23,24 @@ const LoginPage: React.FC = () => {
     const data = await response.text();
     if (response.ok) {
       setMessage(`✅ ${data}`);
+      setEmail("");
+      setPassword("");
+      let datajson = JSON.parse(data);
+      localStorage.setItem("jwt", datajson.jwt);
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 2000);
     } else {
-      setMessage(`❌ ${data}`);
+      toast.error("Invalid email/password", {
+        position: "top-right",
+        autoClose: 2000,
+      });
     }
   };
 
   return (
     <section className="hero is-fullheight ">
+      <ToastContainer />
       <div className="hero-body">
         <div className="container">
           <div className="columns is-centered">
