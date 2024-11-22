@@ -7,7 +7,7 @@ export default function Layout() {
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <a className="navbar-item" href="/dashboard">
-            <img src="/logo.png" alt="Logo" width="50" />
+            <img src="/logoIcon.png" alt="Logo" />
           </a>
         </div>
       </nav>

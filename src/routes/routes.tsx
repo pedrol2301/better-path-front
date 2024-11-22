@@ -12,8 +12,12 @@ export default function Router() {
   return (
     <BrowserRouter basename='/'>
         <Routes>
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={
+                    jwt ? <Navigate to="/dashboard"/> : <Navigate to="/login" />
+                }/>
+            <Route path="/login" element={
+                    jwt ? <Navigate to="/dashboard"/> : <LoginPage />
+                } />
             <Route path="/register" element={<Register/>} />
         </Routes>
         <Routes>

@@ -1,1 +1,39 @@
 @import "bulma/css/bulma.min.css";
+
+.custom-white.has-text-white a{
+  text-decoration: none;
+  color: white;
+}
+
+.has-text-black a, .has-text-black *{
+    text-decoration: none;
+    color: black;
+}
+
+.fc-h-event {
+    border: 0px;
+    display: block;
+}
+
+/* Estilo padrão para todos os botões */
+.fc-button {
+    background-color: #ffb70f !important; /* Cor primária do Bulma */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5em 1em;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+  
+.fc-button:hover {
+    background-color: #c08600  !important;; /* Tom mais escuro no hover */
+    cursor: pointer;
+}
+  
+.fc-button.fc-button-active {
+    background-color: #ffdd57; /* Cor do botão ativo */
+    color: black;
+}
+  
+  
